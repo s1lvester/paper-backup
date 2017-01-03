@@ -1,8 +1,8 @@
 #!/bin/bash
 
 BASE="/tmp"
-HOST="diskstation"
-FOLDER="documents"
+HOST="freenas"
+FOLDER="/mnt/citadel/documents"
 YEAR=`date '+%Y'`
 
 if [ -z "$1" ]; then
@@ -20,7 +20,7 @@ if [ -z "$2" ]; then
 fi
 
 OUTPUT="$BASE/$1"
-REMOTE="sftp://$2@$HOST/home/$FOLDER/$YEAR/$3/$1.pdf"
+REMOTE="$2@$HOST:$FOLDER/$YEAR/$3/$1.pdf"
 LOCAL="$OUTPUT/$1.pdf"
 
 if [ ! -f "$LOCAL" ]; then
@@ -30,5 +30,5 @@ fi
 
 
 echo copying to $REMOTE
-curl --ftp-create-dirs --insecure -T "$LOCAL" "$REMOTE"
+scp "$LOCAL" "$REMOTE"
 

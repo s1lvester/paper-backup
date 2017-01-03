@@ -13,9 +13,16 @@ OUTPUT="$BASE/$1"
 mkdir -p "$OUTPUT"
 
 echo 'scanning...'
-scanimage --resolution 300 \
-	  --batch="$OUTPUT/scan_%03d.pnm" \
-          --format=pnm \
-          --mode Gray \
-          --source 'ADF Duplex' 
+scanimage \
+	--device=net:localhost:canon_dr:libusb:001:006 \
+	--source="ADF Duplex" \
+	--format=pnm \
+	--mode=Color \
+	--resolution=300 \
+	--rollerdeskew=yes \
+	--stapledetect=yes \
+	--swdeskew=yes \
+	--df-length=yes \
+	--batch="/tmp/out%d.tiff"
+
 echo "Output in $OUTPUT/scan*.pnm"
