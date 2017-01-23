@@ -2,15 +2,8 @@
 
 DIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
 JOBID=`date '+%Y-%m-%d_%H%M%S'`
-USER=$1
-KEYWORD=$2
-
-if [ -z "$USER" ]; then
-    echo "Usage: $0 <user> [<keyword>]"
-    echo "please give a user"
-    exit 1
-fi
-
+USER="markus"
+KEYWORD=$1
 
 # run the scanning in foreground
 $DIR/01-scan.sh "$JOBID"
@@ -20,13 +13,7 @@ $DIR/01-scan.sh "$JOBID"
     # lock processing to make sure only one is running at a time
     (
         flock -x 200 # wait for lock
-
-        $DIR/02-createpdf.sh "$JOBID"
-        $DIR/03-nascopy.sh "$JOBID" "$USER" "$KEYWORD"
-#        $DIR/04-gdrivecopy.sh "$JOBID" "$USER" "$KEYWORD"
-        $DIR/05-cleanup.sh "$JOBID"
-
+        $DIR/02-process.sh "$JOBID" "$USER" "$KEYWORD"
     ) 200>/tmp/scan.lock
 ) &
-
 
