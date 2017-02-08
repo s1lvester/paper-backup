@@ -23,11 +23,12 @@ for i in $(ls scan_*.pnm); do
     filename=$(basename $i)
     filename="${filename%.*}"
     number="${filename//[^0-9]/}"
-    unpaper "${i}" "${filename}_unpapered.pnm" # remove stuff from scaned doc
-    convert "${filename}_unpapered.pnm" "${filename}.pdf" 
+#    unpaper "${i}" "${filename}_unpapered.pnm" # remove stuff from scaned doc
+#    convert "${filename}_unpapered.pnm" "${filename}.pdf" 
+    convert "${i}" "${filename}.pdf" 
 	ocrmypdf \
-        --deskew \
         --clean \
+        --deskew \
         --rotate-pages \
         --keywords "$3" \
         --language "$LANGUAGE" \
