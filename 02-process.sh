@@ -1,8 +1,8 @@
 #!/bin/bash
 
-LANGUAGE="deu" # the tesseract language
-BASE="/tmp"    # local storage
-HOST="freenas" # remote host
+LANGUAGE="deu"           # the tesseract language
+BASE="/tmp"              # local storage
+HOST="192.168.5.42" # remote host
 FOLDER="/mnt/citadel/documents" # remote location
 YEAR=`date '+%Y'`
 TS=`date '+%Y-%m-%d_%H-%M-%S'` # timestamp
